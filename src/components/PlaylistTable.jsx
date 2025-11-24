@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { deleteGroupFromPi } from "srs/backend/piApi";
 
 export default function PlaylistTable({ newCommand }) {
   const [commands, setCommands] = useState([]);
@@ -51,6 +52,9 @@ export default function PlaylistTable({ newCommand }) {
     await fetch(`http://localhost:3001/recordings/title/${title}`, {
       method: "DELETE",
     });
+
+    //delete from raspberry pi
+    await deleteGroupFromPi(title);
   };
 
   return (

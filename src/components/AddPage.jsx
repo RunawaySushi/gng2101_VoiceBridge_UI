@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { uploadGroupToPi } from "srs/backend/piApi";
 
 export default function AddPage({ inputValue, setInputValue, onComplete }) {
   //current command title
@@ -17,6 +18,9 @@ export default function AddPage({ inputValue, setInputValue, onComplete }) {
   const [completed, setCompleted] = useState(false);
   //flag for duplicate command
   const [commandExists, setCommandExists] = useState(false);
+
+
+
 
   //sync title with input prop
   useEffect(() => {
@@ -127,6 +131,10 @@ export default function AddPage({ inputValue, setInputValue, onComplete }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(completedCommand),
     });
+
+
+    //upload to pi
+    await uploadGroupToPi(title, recordings);
 
     if (onComplete) onComplete(completedCommand);
 
